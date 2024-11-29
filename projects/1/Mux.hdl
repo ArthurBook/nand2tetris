@@ -11,5 +11,12 @@ CHIP Mux {
     OUT out;
 
     PARTS:
-    //// Replace this comment with your code.
+    // Using disjunctive normal form
+    Or(a=b, b=sel, out=bOrsel);
+    Not(in=bOrsel, out=notbOrsel);
+    And(a=a, b=notbOrsel, out=aAndnotbOrsel);
+    And(a=a, b=b, out=aAndb);
+    And(a=b, b=sel, out=bAndsel);
+    Or(a=aAndb, b=bAndsel, out=aAndbOrbAndsel);
+    Or(a=aAndbOrbAndsel, b=aAndnotbOrsel, out=out);
 }
