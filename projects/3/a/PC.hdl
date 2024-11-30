@@ -14,5 +14,9 @@ CHIP PC {
     OUT out[16];
     
     PARTS:
-    //// Replace this comment with your code.
+    Inc16(in=current, out=nextIfInc);
+    Mux16(a=current, b=nextIfInc, sel=inc, out=nextIfNotload);
+    Mux16(a=nextIfNotload, b=in, sel=load, out=nextIfNotreset);
+    Mux16(a=nextIfNotreset, b=false, sel=reset, out=next);
+    Register(in=next, load=true, out=current, out=out);
 }
