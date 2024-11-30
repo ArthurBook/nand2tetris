@@ -41,5 +41,35 @@ CHIP ALU {
         ng;      // if (out < 0)  equals 1, else 0
 
     PARTS:
-    //// Replace this comment with your code.
+    // zero the x input?
+    Mux16(a=x, b=false, sel=zx, out=Resultzx);
+
+    // negate the x input?
+    Not16(in=Resultzx, out=notResultzx);
+    Mux16(a=Resultzx, b=notResultzx, sel=nx, out=Resultnx);
+    
+    // zero the y input?
+    Mux16(a=y, b=false, sel=zy, out=Resultzy);
+
+    // negate the y input?
+    Not16(in=Resultzy, out=notResultzy);
+    Mux16(a=Resultzy, b=notResultzy, sel=ny, out=Resultny);
+
+    // compute (out = x + y) or (out = x & y)?
+    And16(a=Resultnx, b=Resultny, out=xAndy);
+    Add16(a=Resultnx, b=Resultny, out=xAddy);
+    Mux16(a=xAndy, b=xAddy, sel=f, out=Resultf);
+
+    // negate the out output?
+    Not16(in=Resultf, out=notResultf);
+    Mux16(a=Resultf, b=notResultf, sel=no, out=out, out[0..7]=lowBits, out[8..15]=highBits, out[15]=signBit);
+    
+    // if (out == 0) equals 1, else 0
+    Or8Way(in=lowBits, out=lowBitsOr);
+    Or8Way(in=highBits, out=highBitsOr);
+    Or(a=lowBitsOr, b=highBitsOr, out=anyBitSet);
+    Not(in=anyBitSet, out=zr);
+
+    // if (out < 0)  equals 1, else 0
+    And(a=signBit, b=true, out=ng);
 }
