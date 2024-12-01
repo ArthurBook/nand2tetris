@@ -10,6 +10,7 @@ A complete modern computer written from scratch following "The Elements of Compu
 - [Module 3](./projects/3): 32kB Random Access Memory (RAM)
 - [Module 4](./projects/4): Machine code for multiplication & basic keyboard + screen I/O
 - [Module 5](./projects/5): Central Processing Unit (CPU) connected to memory and I/O devices
+- [Module 6](./projects/6): Assembler written in python 3.11
 
 ## ⚠️ Disclaimer
 This repository contains coursework for the [Nand2Tetris MOOC](https://www.nand2tetris.org/). Please adhere to academic integrity guidelines. Plagiarism is a violation of the repository's license.
