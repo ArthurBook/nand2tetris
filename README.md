@@ -8,7 +8,7 @@ A complete modern computer written from scratch following "The Elements of Compu
 - [Module 1](./projects/1): Elementary logic gates (And, Or, Xor, Mux, DMux...)
 - [Module 2](./projects/2): Arithmetic/Logic Unit (ALU) with support for 16-bit addition and other basic operations
 - [Module 3](./projects/3): 32kB Random Access Memory (RAM)
-- [Module 4](./projects/4): Machine code for multiplication & basic keyboard + screen I/O
+- [Module 4](./projects/4): Assembly for multiplication & basic keyboard + screen I/O
 - [Module 5](./projects/5): Central Processing Unit (CPU) connected to memory and I/O devices
 - [Module 6](./projects/6): Assembler written in python 3.11
 
