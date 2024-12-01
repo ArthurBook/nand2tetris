@@ -5,7 +5,7 @@
 A complete modern computer written from scratch following "The Elements of Computing Systems" by Nisan, N., & Schocken, S. (2005).
 
 ## 🧩 Breakdown
-- [Module 1](./projects/1): Elementary logic gates (Nand, And, Or, Xor...)
+- [Module 1](./projects/1): Elementary logic gates (And, Or, Xor, Mux, DMux...)
 - [Module 2](./projects/2): Arithmetic/Logic Unit (ALU) with support for 16-bit addition and other basic operations
 - [Module 3](./projects/3): 32kB Random Access Memory (RAM)
 - [Module 4](./projects/4): Machine code for multiplication & basic keyboard + screen I/O
