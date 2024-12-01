@@ -32,5 +32,50 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-	//// Replace this comment with your code.
+    // Ctrl bits
+    Not(in=instruction[15], out=isAInstruction);
+    Not(in=isAInstruction, out=isCInstruction);
+
+    // D register
+    And(a=instruction[4], b=isCInstruction, out=writeDRegister);
+    DRegister(in=ALUout, load=writeDRegister, out=DRegisterVal);
+
+    // A register
+    Mux(a=instruction[5], b=true, sel=isAInstruction, out=writeARegister);
+    Mux16(a=ALUout, b=instruction, sel=isAInstruction, out=ARegisterVal);
+    ARegister(in=ARegisterVal, load=writeARegister, out=prevAValue, out[0..14]=addressM);
+    Mux16(a=prevAValue, b=inM, sel=instruction[12], out=ALUy);
+
+    // ALU
+    ALU(
+      x=DRegisterVal, 
+      y=ALUy, 
+      zx=instruction[11], 
+      nx=instruction[10], 
+      zy=instruction[9], 
+      ny=instruction[8], 
+      f=instruction[7], 
+      no=instruction[6], 
+      // outputs
+      out=ALUout, 
+      out=outM, // Output 1 
+      zr=isZero, 
+      ng=isNegative
+    );
+
+    // Output 2: WriteM
+    And(a=instruction[3], b=isCInstruction, out=writeM);
+
+    // Handle jumps
+    Or(a=isNegative, b=isZero, out=isZeroOrNegative);
+    Not(in=isZeroOrNegative, out=isPositive);
+    And(a=instruction[2], b=isNegative, out=isNegativeJump);
+    And(a=instruction[1], b=isZero, out=isZeroJump);
+    And(a=instruction[0], b=isPositive, out=isPositiveJump);
+    Or(a=isNegativeJump, b=isZeroJump, out=isZeroOrNegativeJump);
+    Or(a=isPositiveJump, b=isZeroOrNegativeJump, out=isJump);
+    And(a=isCInstruction, b=isJump, out=writePC);
+
+    // Increment program counter
+    PC(in=prevAValue, load=writePC, inc=true, reset=reset, out[0..14]=pc); // Output 4
 }
